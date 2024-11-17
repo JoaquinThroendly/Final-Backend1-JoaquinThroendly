@@ -1,0 +1,19 @@
+<body>
+    <h1>Carrito de Compras - ID: {{carritoId}}</h1>
+    <div class="carrito-container">
+        {{#if productos.length}}
+            <ul>
+                {{#each products}}
+                    <li>
+                        <span class="product-name">{{this.product.title}}</span>
+                        <span class="product-price">${{this.product.price}}</span>
+                        <span class="quantity">{{this.quantity}} unidades</span>
+                    </li>
+                {{/each}}
+            </ul>
+            <button class="btn" onclick="window.location.href='/checkout'">Proceder a Pago</button>
+        {{else}}
+            <p class="empty-cart">Tu carrito está vacío.</p>
+        {{/if}}
+    </div>
+</body>

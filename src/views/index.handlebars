@@ -1,0 +1,32 @@
+<body>
+    <a href="/" class="home-link">Home Page</a>
+    <hr>
+    <h1>Lista de Productos</h1>
+    <div class="products-container">
+        <ul>
+            {{#each productos}}
+                <li>
+                    <h2>{{title}}</h2>
+                    <p>Precio: ${{price}}</p>
+                    <p>{{description}}</p>
+                    <p>Categoría: <span class="category">{{category}}</span></p>
+                    <a href="/products/{{_id}}">Ver más detalles</a>
+                        <button type="submit">Agregar al carrito</button>
+                    </form>
+                </li>
+            {{/each}}
+        </ul>
+    </div>
+
+    <div class="pagination">
+        {{#if hasPrevPage}}
+            <a href="/products?page={{prevPage}}&limit={{limit}}&sort={{sort}}&query={{query}}">Anterior</a>
+        {{/if}}
+
+        <span>Página {{page}} de {{totalPages}}</span>
+
+        {{#if hasNextPage}}
+            <a href="/products?page={{nextPage}}&limit={{limit}}&sort={{sort}}&query={{query}}">Siguiente</a>
+        {{/if}}
+    </div>
+</body>

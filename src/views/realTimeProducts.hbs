@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos en Tiempo Real</title>
+    <link rel="stylesheet" href="../public/styles.css">
+</head>
+<body>
+    <h1>Manejo de productos en tiempo real, en esta PreEntrega 2</h1>
+
+    <ul id="lista-productos">
+        {{#each productos}}
+            <li data-id="{{id}}">{{title}} - ${{price}} 
+                <button class="eliminar-producto" data-id="{{id}}">Eliminar</button>
+            </li>
+        {{/each}}
+    </ul>
+
+    <h2>Agregar un nuevo producto (Actualización del Productos.JSON en tiempo real)</h2>
+    <form id="form-agregar-producto">
+        <label for="title">Nombre del producto:</label>
+        <input type="text" id="title" name="title" required>
+        
+        <label for="price">Precio:</label>
+        <input type="number" id="price" name="price" required>
+
+        
+        <button type="submit">Agregar Producto</button>
+    </form>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+
+        socket.on('producto-actualizado', (productos) => {
+            const lista = document.getElementById('lista-productos');
+            lista.innerHTML = ''; 
+
+            productos.forEach(producto => {
+                const li = document.createElement('li');
+                li.setAttribute('data-id', producto.id);
+                li.innerHTML = `${producto.title} - $${producto.price} 
+                    <button class="eliminar-producto" data-id="${producto.id}">Eliminar</button>`;
+                lista.appendChild(li);
+            });
+        });
+
+        document.getElementById('form-agregar-producto').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const title = document.getElementById('title').value;
+            const price = document.getElementById('price').value;
+
+            socket.emit('nuevo-producto', { title, price });
+
+            document.getElementById('title').value = '';
+            document.getElementById('price').value = '';
+        });
+
+        document.getElementById('lista-productos').addEventListener('click', (e) => {
+            if (e.target.classList.contains('eliminar-producto')) {
+                const id = e.target.getAttribute('data-id');
+                socket.emit('eliminar-producto', Number(id));
+            }
+        });
+    </script>
+</body>
+</html>

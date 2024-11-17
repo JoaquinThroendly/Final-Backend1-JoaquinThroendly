@@ -1,0 +1,17 @@
+<body>
+    <div class="product-container">
+        <h1>{{producto.title}}</h1>
+
+        <div class="product-details">
+            <p><strong>Descripción:</strong> {{producto.description}}</p>
+            <p><strong>Precio:</strong> ${{producto.price}}</p>
+            <p><strong>Categoría:</strong> {{producto.category}}</p>
+        </div>
+
+        <form>
+            <button type="submit" class="btn btn-success">Agregar al Carrito</button>
+        </form>
+
+        <a href="/products" class="btn btn-secondary">Volver a Productos</a>
+    </div>
+</body>
